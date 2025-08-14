@@ -1,0 +1,71 @@
+:root{
+  --bg:#0b0b0b;
+
+  /* global grid framing INSIDE the image bounds (percent of image) */
+  --pad-x: 7.5%;
+  --pad-y: 6.3%;
+
+  /* spacing between columns/rows (percent of image) */
+  --gap-x: 6.9%;
+  --gap-y: 6.2%;
+
+  /* hitbox size relative to each cell */
+  --hit-w: 83.5%;
+  --hit-h: 87%;
+
+  /* vertical nudge relative to image height */
+  --shift-y: 2.2%;
+
+  --key-press: rgba(0,0,0,0.28);
+  --key-outline: rgba(255,255,255,0.18);
+  --radius: 16%;
+}
+
+/* Base layout — full screen, no scroll */
+html,body{height:100%;}
+body{
+  margin:0; background:var(--bg); color:#fff;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  -webkit-user-select:none; user-select:none;
+  overscroll-behavior:contain; touch-action:manipulation;
+}
+.app{ position:fixed; inset:0; display:grid; place-items:center; }
+.frame{ position:relative; width:100vw; height:100vh; }
+.bg-img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain; /* NEVER crop the image */
+  pointer-events:none;
+}
+
+/* Overlay will be sized/positioned by JS to EXACTLY match the rendered image box */
+.overlay{
+  position:absolute;
+  /* left/top/width/height set by JS (syncs to image box) */
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(4,1fr);
+  padding: var(--pad-y) var(--pad-x);
+  column-gap: var(--gap-x);
+  row-gap: var(--gap-y);
+}
+
+.key{ position:relative; background:transparent; border:none; outline:none; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+
+.key::before{
+  content:""; position:absolute; left:50%; top:50%;
+  width: var(--hit-w); height: var(--hit-h);
+  transform: translate(-50%, calc(-50% - var(--shift-y)));
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px var(--key-outline) inset;
+  background: transparent; pointer-events:none;
+  transition: transform 60ms ease, background-color 60ms ease, box-shadow 120ms ease;
+}
+.key:active::before, .key.pressed::before{
+  background: var(--key-press);
+  transform: translate(-50%, calc(-50% - var(--shift-y))) scale(0.985);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.25) inset;
+}
+
+/* Hide HUD entirely (kept out of this build) */
+.hud{ display:none; }
