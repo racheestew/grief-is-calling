@@ -1,0 +1,116 @@
+:root{
+  --bg:#0b0b0b;
+
+  --pad-x: 7.5%;   /* left/right gutter */
+  --pad-y: 6.3%;   /* top/bottom gutter */
+
+  --gap-x: 6.9%;   /* horizontal spacing between columns */
+  --gap-y: 6.2%;   /* vertical spacing between rows */
+
+  --hit-w: 83.5%;  /* width of tappable area inside each cell */
+  --hit-h: 87%;    /* height of tappable area inside each cell */
+
+  --key-press: rgba(0,0,0,0.28);
+  --key-outline: rgba(255,255,255,0.18);
+  --radius: 16%;
+}
+
+/* Base layout — no scrolling, centered */
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#fff;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  -webkit-user-select:none; user-select:none;
+  overscroll-behavior:contain;
+  touch-action:manipulation;
+}
+
+.app{
+  position:fixed; inset:0;
+  display:grid; place-items:center;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Keeps the keypad proportioned and undistorted */
+.frame{
+  position:relative;
+  width:100vw; height:100vh;
+  max-width:100vmin;
+  max-height:100vh;
+  aspect-ratio:3/4;  /* 3 cols × 4 rows */
+}
+
+.bg-img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  pointer-events:none; /* taps go to overlay buttons */
+}
+
+/* ===== Calibrated Overlay ===== */
+.overlay{
+  position:absolute; inset:0;
+
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(4,1fr);
+
+  /* Shrink/expand whole grid to match photo margins */
+  padding: var(--pad-y) var(--pad-x);
+
+  /* Independent row/column gaps to match photo spacing */
+  column-gap: var(--gap-x);
+  row-gap: var(--gap-y);
+}
+
+/* Each grid cell */
+.key{
+  position:relative;
+  background:transparent;
+  border:none; outline:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+/* Inner rounded tappable area centered within each cell, shifted up */
+.key::before{
+  content:"";
+  position:absolute; left:50%; top:50%;
+  width: var(--hit-w);
+  height: var(--hit-h);
+  transform: translate(-50%,calc(-50% - 15px)); /* shift up 15px */
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px var(--key-outline) inset;
+  background: transparent;
+  pointer-events: none; /* let the button receive the click */
+  transition: transform 60ms ease, background-color 60ms ease, box-shadow 120ms ease;
+}
+
+/* Press feedback */
+.key:active::before, .key.pressed::before{
+  background: var(--key-press);
+  transform: translate(-50%,calc(-50% - 15px)) scale(0.985);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.25) inset;
+}
+
+/* Hide the status chip */
+.hud{
+  display: none;
+}
+
+/* Optional: show key labels while aligning — add class="show-guides" to <body> */
+body.show-guides .key::after{
+  content: attr(data-key);
+  position:absolute; left:50%; top:50%;
+  transform: translate(-50%,calc(-50% - 15px));
+  font: 700 clamp(12px,3vmin,20px)/1 system-ui, sans-serif;
+  color: rgba(255,255,255,0.7);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  pointer-events:none;
+}
+
+@media (orientation:landscape){
+  .frame{ max-width:80vh; }
+}
