@@ -1,0 +1,102 @@
+:root{
+  --bg:#0b0b0b;
+
+  /* global grid framing on the photo */
+  --pad-x: 7.5%;
+  --pad-y: 6.3%;
+
+  /* spacing between columns/rows */
+  --gap-x: 6.9%;
+  --gap-y: 6.2%;
+
+  /* hitbox size (relative to each cell) */
+  --hit-w: 83.5%;
+  --hit-h: 87%;
+
+  /* vertical tweak for all keys (PERCENT so it scales on iPhone) */
+  --shift-y: 2.2%;
+
+  --key-press: rgba(0,0,0,0.28);
+  --key-outline: rgba(255,255,255,0.18);
+  --radius: 16%;
+}
+
+/* Base layout — no scrolling, centered */
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:#fff;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  -webkit-user-select:none; user-select:none;
+  overscroll-behavior:contain;
+  touch-action:manipulation;
+}
+
+.app{
+  position:fixed; inset:0;
+  display:grid; place-items:center;
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Frame's aspect ratio will be set dynamically to the image's natural ratio */
+.frame{
+  position:relative;
+  width:100vw; height:100vh;
+  max-width:100vmin;
+  max-height:100vh;
+  /* aspect-ratio will be set by JS after image loads */
+}
+
+.bg-img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:contain; /* never crop; match overlay exactly */
+  pointer-events:none;
+}
+
+/* Calibrated Overlay */
+.overlay{
+  position:absolute; inset:0;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(4,1fr);
+  padding: var(--pad-y) var(--pad-x);
+  column-gap: var(--gap-x);
+  row-gap: var(--gap-y);
+}
+
+/* Each cell button */
+.key{
+  position:relative;
+  background:transparent;
+  border:none; outline:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+
+.key::before{
+  content:"";
+  position:absolute; left:50%; top:50%;
+  width: var(--hit-w);
+  height: var(--hit-h);
+  transform: translate(-50%, calc(-50% - var(--shift-y)));
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px var(--key-outline) inset;
+  background: transparent;
+  pointer-events: none;
+  transition: transform 60ms ease, background-color 60ms ease, box-shadow 120ms ease;
+}
+
+.key:active::before, .key.pressed::before{
+  background: var(--key-press);
+  transform: translate(-50%, calc(-50% - var(--shift-y))) scale(0.985);
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.25) inset;
+}
+
+/* Hide HUD text (kept for a11y) */
+.hud{ display:none; }
+
+@media (orientation:landscape){
+  .frame{ max-width:80vh; }
+}
