@@ -1,0 +1,29 @@
+:root{
+  --bg:#0b0b0b;
+}
+
+/* Use dynamic viewport units to avoid iOS toolbar jump */
+html,body{height:100%;}
+body{
+  margin:0; background:var(--bg); color:#fff;
+  font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  -webkit-user-select:none; user-select:none;
+  overscroll-behavior:none; touch-action:manipulation;
+}
+
+.wrap{
+  width:100vw; height:100dvh; /* iOS-friendly vh */
+  display:grid; place-items:center;
+}
+
+#pad{
+  width:min(100vw, 100dvh*0.75); /* keep 3:4 aspect area dominant by height */
+  height:auto;
+  display:block;
+  max-height:100dvh;
+}
+
+/* Press feedback via CSS class toggled from JS */
+.hit{ fill: rgba(0,0,0,0); }
+.hit.pressed{ fill: rgba(0,0,0,0.28); }
+.outline{ vector-effect: non-scaling-stroke; }
