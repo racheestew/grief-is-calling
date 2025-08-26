@@ -1,50 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no" />
-  <title>Grief is Calling — Fire 7 Calibrator</title>
-  <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Grief is Calling</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-  <div id="stage" class="stage">
-    <img id="bg" class="photo" src="keypad.jpg" alt="Payphone keypad" />
-    <div id="overlay" class="overlay" aria-label="Payphone keypad">
-      <button class="key" data-key="1" aria-label="1"></button>
-      <button class="key" data-key="2" aria-label="2"></button>
-      <button class="key" data-key="3" aria-label="3"></button>
-      <button class="key" data-key="4" aria-label="4"></button>
-      <button class="key" data-key="5" aria-label="5"></button>
-      <button class="key" data-key="6" aria-label="6"></button>
-      <button class="key" data-key="7" aria-label="7"></button>
-      <button class="key" data-key="8" aria-label="8"></button>
-      <button class="key" data-key="9" aria-label="9"></button>
-      <button class="key" data-key="star" aria-label="star"></button>
-      <button class="key" data-key="0" aria-label="0"></button>
-      <button class="key" data-key="pound" aria-label="pound"></button>
-    </div>
-    <div id="hud" class="hud"></div>
-  </div>
+  <main class="app">
+    <h1 class="title">Tap * To Start</h1>
 
-  <!-- Floating calibrator panel -->
-  <button id="togglePanel" class="toggle">Calibrate</button>
-  <div id="panel" class="panel" hidden>
-    <div class="row"><label>padX (%w)</label><input id="padX" type="range" min="0" max="15" step="0.1"><span id="padXv"></span></div>
-    <div class="row"><label>padY (%h)</label><input id="padY" type="range" min="0" max="15" step="0.1"><span id="padYv"></span></div>
-    <div class="row"><label>gapX (%w)</label><input id="gapX" type="range" min="0" max="20" step="0.1"><span id="gapXv"></span></div>
-    <div class="row"><label>gapY (%h)</label><input id="gapY" type="range" min="0" max="20" step="0.1"><span id="gapYv"></span></div>
-    <div class="row"><label>hitW (%cell)</label><input id="hitW" type="range" min="60" max="100" step="0.1"><span id="hitWv"></span></div>
-    <div class="row"><label>hitH (%cell)</label><input id="hitH" type="range" min="60" max="100" step="0.1"><span id="hitHv"></span></div>
-    <div class="row"><label>shiftY (%hitH)</label><input id="shiftY" type="range" min="-10" max="10" step="0.1"><span id="shiftYv"></span></div>
-    <div class="row buttons">
-      <button id="reset">Reset</button>
-      <button id="copy">Copy JSON</button>
-      <button id="hide">Hide</button>
+    <div id="keypad" class="keypad" aria-label="Phone keypad">
+      <!-- Static markup mirrors the original app; each key uses its own image for styling -->
+      <button class="key" data-sound="1"   style="--img:url('assets/keys/1.png')"   aria-label="One"></button>
+      <button class="key" data-sound="2"   style="--img:url('assets/keys/2.png')"   aria-label="Two"></button>
+      <button class="key" data-sound="3"   style="--img:url('assets/keys/3.png')"   aria-label="Three"></button>
+      <button class="key" data-sound="4"   style="--img:url('assets/keys/4.png')"   aria-label="Four"></button>
+      <button class="key" data-sound="5"   style="--img:url('assets/keys/5.png')"   aria-label="Five"></button>
+      <button class="key" data-sound="6"   style="--img:url('assets/keys/6.png')"   aria-label="Six"></button>
+      <button class="key" data-sound="7"   style="--img:url('assets/keys/7.png')"   aria-label="Seven"></button>
+      <button class="key" data-sound="8"   style="--img:url('assets/keys/8.png')"   aria-label="Eight"></button>
+      <button class="key" data-sound="9"   style="--img:url('assets/keys/9.png')"   aria-label="Nine"></button>
+      <button class="key" data-sound="star" style="--img:url('assets/keys/star.png')" aria-label="Star"></button>
+      <button class="key" data-sound="0"   style="--img:url('assets/keys/0.png')"   aria-label="Zero"></button>
+      <button class="key" data-sound="pound" style="--img:url('assets/keys/pound.png')" aria-label="Pound"></button>
     </div>
-    <div class="note">These values save automatically (localStorage).</div>
-  </div>
+  </main>
 
+  <audio id="player" preload="auto"></audio>
   <script src="script.js"></script>
 </body>
 </html>
