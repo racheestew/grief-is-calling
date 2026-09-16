@@ -75,3 +75,193 @@ body {
   margin: 0;
   font-size: 0.95rem;
 }
+
+/* Record / Replay controls */
+.voicepad {
+  width: min(92vw, 420px);
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.voice-btn {
+  width: 64px;
+  height: 64px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.06);
+  transition: transform .06s ease, filter .06s ease;
+}
+.voice-btn:active { transform: scale(0.96); }
+.voice-btn:disabled { opacity: 0.35; cursor: default; }
+.voice-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--ring); }
+
+.icon { display: block; }
+
+/* Red circle -> red square (stop) while recording */
+.record-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #e5484d;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.25);
+  transition: border-radius .1s ease, width .1s ease, height .1s ease;
+}
+.record-btn.is-recording .record-icon {
+  border-radius: 5px;
+  width: 22px;
+  height: 22px;
+}
+
+/* Green play triangle */
+.play-icon {
+  width: 0;
+  height: 0;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 24px solid #34c759;
+  margin-left: 5px;
+}
+
+.voice-status {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  min-height: 1.2em;
+}
+
+/* Admin panel: hidden until opened via long-press on the title */
+.admin-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  flex-direction: column;
+  gap: 14px;
+  padding: 24px;
+  background: rgba(10, 10, 10, 0.97);
+  color: var(--fg);
+}
+.admin-overlay.open { display: flex; }
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.admin-title {
+  margin: 0;
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+}
+.admin-close-btn {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  color: var(--fg);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.admin-close-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--ring); }
+
+.admin-summary {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.admin-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(255,255,255,0.05);
+}
+.admin-row-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+.admin-row-progress {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+}
+.admin-row-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.admin-row-play,
+.admin-row-delete {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.admin-row-play {
+  background: rgba(52,199,89,0.2);
+  color: #34c759;
+}
+.admin-row-play.is-playing {
+  background: #34c759;
+  color: #08170d;
+}
+.admin-row-delete {
+  background: rgba(229,72,77,0.2);
+  color: #e5484d;
+}
+.admin-row-delete.confirm {
+  background: #e5484d;
+  color: #fff;
+}
+.admin-row-play:focus-visible,
+.admin-row-delete:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--ring); }
+
+.admin-empty {
+  color: var(--muted);
+  text-align: center;
+  margin-top: 24px;
+}
+
+.admin-clear-btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 14px;
+  background: rgba(229,72,77,0.15);
+  color: #e5484d;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.admin-clear-btn.confirm {
+  background: #e5484d;
+  color: #fff;
+}
+.admin-clear-btn:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--ring); }

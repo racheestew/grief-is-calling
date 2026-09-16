@@ -10,7 +10,7 @@
 </head>
 <body>
   <main class="app">
-    <h1 class="title">Grief Is Calling</h1>
+    <h1 id="appTitle" class="title">Grief Is Calling</h1>
     <h2 class="title">Tap * To Start</h2>
 
     <div id="keypad" class="keypad" aria-label="Phone keypad">
@@ -28,8 +28,31 @@
       <button class="key" data-sound="0"   style="--img:url('assets/keys/0.png')"   aria-label="Zero"></button>
       <button class="key" data-sound="pound" style="--img:url('assets/keys/pound.png')" aria-label="Pound"></button>
     </div>
+
+    <div id="voicepad" class="voicepad" aria-label="Record and replay controls">
+      <button id="recordBtn" class="voice-btn record-btn" type="button" aria-label="Record a message" aria-pressed="false">
+        <span class="icon record-icon" aria-hidden="true"></span>
+      </button>
+      <div id="voiceStatus" class="voice-status" aria-live="polite">Tap the red button to record a message</div>
+      <button id="playBtn" class="voice-btn play-btn" type="button" aria-label="Play a random recording" disabled>
+        <span class="icon play-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+
     <h2 class="title">Tap # To End</h2>
   </main>
+
+  <!-- Hidden admin panel: opened by a long-press on the title. Lets a
+       gallery admin see how many recordings exist and wipe them all. -->
+  <div id="adminOverlay" class="admin-overlay" role="dialog" aria-modal="true" aria-label="Recordings admin panel">
+    <div class="admin-header">
+      <h2 class="admin-title">Recordings</h2>
+      <button id="adminCloseBtn" class="admin-close-btn" type="button" aria-label="Close admin panel">&#10005;</button>
+    </div>
+    <p id="adminSummary" class="admin-summary">0 recordings stored</p>
+    <div id="adminList" class="admin-list"></div>
+    <button id="adminClearBtn" class="admin-clear-btn" type="button">Clear All Recordings</button>
+  </div>
 
   <audio id="player" preload="auto"></audio>
   <script src="script.js"></script>
