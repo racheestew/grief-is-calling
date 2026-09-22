@@ -228,9 +228,11 @@
     return `${m}:${String(r).padStart(2, '0')}`;
   }
 
+  // Blank until something is actually happening (recording/playing),
+  // rather than showing default instructional text at rest.
   function showIdleStatus(){
     if (isRecording || isPlayingVoice) return;
-    voiceStatus.textContent = 'Tap the red button to record a message';
+    voiceStatus.textContent = '';
   }
 
   function updateButtonStates(){
