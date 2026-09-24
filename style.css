@@ -138,10 +138,9 @@ body {
 .voice-label {
   text-align: center;
   color: var(--fg);
-  font-size: 1.3rem;
+  font-size: 1rem;
   font-weight: 500;
   max-width: 220px;
-  white-space: nowrap;
   line-height: 1.35;
   opacity: 0.9;
 }
